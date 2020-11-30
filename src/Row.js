@@ -7,6 +7,8 @@ import 'swiper/swiper.scss';
 import 'swiper/components/navigation/navigation.scss';
 import 'swiper/components/pagination/pagination.scss';
 import 'swiper/components/scrollbar/scrollbar.scss';
+import Youtube from "react-youtube";
+import movieTrailer from "movie-trailer";
 
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y, Autoplay ]);
 
@@ -16,6 +18,7 @@ window.dispatchEvent(new Event('resize'));
 
 function Row({title, fetchUrl, isLargeRow}) {
     const [movies, setMovies] = useState([]);
+    const [trailerUrl, setTrailerUrl] = useState("");
  
     useEffect (() => {
         async function fetchData() {
@@ -27,6 +30,28 @@ function Row({title, fetchUrl, isLargeRow}) {
        
 
     },[fetchUrl]);
+
+    const opts = {
+        height: '390',
+        width: '100%',
+        playerVars: {
+          // https://developers.google.com/youtube/player_parameters
+          autoplay: 1,
+        },
+    }
+
+    const handleClick = (movie) => {
+        if( trailerUrl){
+            setTrailerUrl('');
+        } else {
+            movieTrailer(movie?.name || "")
+            .then(url =>{
+                const urlParams = new URLSearchParams(new URL(url).search);
+                setTrailerUrl(urlParams.get('v'));
+                console.log(urlParams.get('v'));
+            }).catch(error => console.log(error));
+        }
+    }
 
     return (
         <div className="row">
@@ -67,51 +92,25 @@ function Row({title, fetchUrl, isLargeRow}) {
                 pagination={{ clickable: true }}
                 scrollbar={{ draggable: true }}
             >
-                 {/*<SwiperSlide><img className="row__poster row__posterLarge" src="https://image.tmdb.org/t/p/original//x2LSRK2Cm7MZhjluni1msVJ3wDF.jpg" alt="Stranger Things"/></SwiperSlide>
-                    <SwiperSlide><img className="row__poster row__posterLarge" src="https://image.tmdb.org/t/p/original//j3SqEpnRaIth24ktKcI9vp63P9A.jpg" alt="The Crown"/></SwiperSlide>
-                    <SwiperSlide><img className="row__poster row__posterLarge" src="https://image.tmdb.org/t/p/original//scZlQQYnDVlnpxFTxaIv2g0BWnL.jpg" alt="The Umbrella Academy"/></SwiperSlide>
-                    <SwiperSlide><img className="row__poster row__posterLarge" src="https://image.tmdb.org/t/p/original//x2LSRK2Cm7MZhjluni1msVJ3wDF.jpg" alt="Stranger Things"/></SwiperSlide>
-                    <SwiperSlide><img className="row__poster row__posterLarge" src="https://image.tmdb.org/t/p/original//j3SqEpnRaIth24ktKcI9vp63P9A.jpg" alt="The Crown"/></SwiperSlide>
-                    <SwiperSlide><img className="row__poster row__posterLarge" src="https://image.tmdb.org/t/p/original//scZlQQYnDVlnpxFTxaIv2g0BWnL.jpg" alt="The Umbrella Academy"/></SwiperSlide>
-                    <SwiperSlide><img className="row__poster row__posterLarge" src="https://image.tmdb.org/t/p/original//x2LSRK2Cm7MZhjluni1msVJ3wDF.jpg" alt="Stranger Things"/></SwiperSlide>
-                    <SwiperSlide><img className="row__poster row__posterLarge" src="https://image.tmdb.org/t/p/original//j3SqEpnRaIth24ktKcI9vp63P9A.jpg" alt="The Crown"/></SwiperSlide>
-                    <SwiperSlide><img className="row__poster row__posterLarge" src="https://image.tmdb.org/t/p/original//scZlQQYnDVlnpxFTxaIv2g0BWnL.jpg" alt="The Umbrella Academy"/></SwiperSlide>
-                    <SwiperSlide><img className="row__poster row__posterLarge" src="https://image.tmdb.org/t/p/original//x2LSRK2Cm7MZhjluni1msVJ3wDF.jpg" alt="Stranger Things"/></SwiperSlide>
-                    <SwiperSlide><img className="row__poster row__posterLarge" src="https://image.tmdb.org/t/p/original//j3SqEpnRaIth24ktKcI9vp63P9A.jpg" alt="The Crown"/></SwiperSlide>
-                    <SwiperSlide><img className="row__poster row__posterLarge" src="https://image.tmdb.org/t/p/original//scZlQQYnDVlnpxFTxaIv2g0BWnL.jpg" alt="The Umbrella Academy"/></SwiperSlide>
-                    <SwiperSlide><img className="row__poster row__posterLarge" src="https://image.tmdb.org/t/p/original//x2LSRK2Cm7MZhjluni1msVJ3wDF.jpg" alt="Stranger Things"/></SwiperSlide>
-                    <SwiperSlide><img className="row__poster row__posterLarge" src="https://image.tmdb.org/t/p/original//j3SqEpnRaIth24ktKcI9vp63P9A.jpg" alt="The Crown"/></SwiperSlide>
-                    <SwiperSlide><img className="row__poster row__posterLarge" src="https://image.tmdb.org/t/p/original//scZlQQYnDVlnpxFTxaIv2g0BWnL.jpg" alt="The Umbrella Academy"/></SwiperSlide>
-                    <SwiperSlide><img className="row__poster row__posterLarge" src="https://image.tmdb.org/t/p/original//x2LSRK2Cm7MZhjluni1msVJ3wDF.jpg" alt="Stranger Things"/></SwiperSlide>
-                    <SwiperSlide><img className="row__poster row__posterLarge" src="https://image.tmdb.org/t/p/original//j3SqEpnRaIth24ktKcI9vp63P9A.jpg" alt="The Crown"/></SwiperSlide>
-                    <SwiperSlide><img className="row__poster row__posterLarge" src="https://image.tmdb.org/t/p/original//scZlQQYnDVlnpxFTxaIv2g0BWnL.jpg" alt="The Umbrella Academy"/></SwiperSlide>
-                    <SwiperSlide><img className="row__poster row__posterLarge" src="https://image.tmdb.org/t/p/original//x2LSRK2Cm7MZhjluni1msVJ3wDF.jpg" alt="Stranger Things"/></SwiperSlide>
-                    <SwiperSlide><img className="row__poster row__posterLarge" src="https://image.tmdb.org/t/p/original//j3SqEpnRaIth24ktKcI9vp63P9A.jpg" alt="The Crown"/></SwiperSlide>
-                    <SwiperSlide><img className="row__poster row__posterLarge" src="https://image.tmdb.org/t/p/original//scZlQQYnDVlnpxFTxaIv2g0BWnL.jpg" alt="The Umbrella Academy"/></SwiperSlide>
-                    <SwiperSlide><img className="row__poster row__posterLarge" src="https://image.tmdb.org/t/p/original//x2LSRK2Cm7MZhjluni1msVJ3wDF.jpg" alt="Stranger Things"/></SwiperSlide>
-                    <SwiperSlide><img className="row__poster row__posterLarge" src="https://image.tmdb.org/t/p/original//j3SqEpnRaIth24ktKcI9vp63P9A.jpg" alt="The Crown"/></SwiperSlide>
-                    <SwiperSlide><img className="row__poster row__posterLarge" src="https://image.tmdb.org/t/p/original//scZlQQYnDVlnpxFTxaIv2g0BWnL.jpg" alt="The Umbrella Academy"/></SwiperSlide>
-                    <SwiperSlide><img className="row__poster row__posterLarge" src="https://image.tmdb.org/t/p/original//x2LSRK2Cm7MZhjluni1msVJ3wDF.jpg" alt="Stranger Things"/></SwiperSlide>
-                    <SwiperSlide><img className="row__poster row__posterLarge" src="https://image.tmdb.org/t/p/original//j3SqEpnRaIth24ktKcI9vp63P9A.jpg" alt="The Crown"/></SwiperSlide>
-                    <SwiperSlide><img className="row__poster row__posterLarge" src="https://image.tmdb.org/t/p/original//scZlQQYnDVlnpxFTxaIv2g0BWnL.jpg" alt="The Umbrella Academy"/></SwiperSlide>
-                    <SwiperSlide><img className="row__poster row__posterLarge" src="https://image.tmdb.org/t/p/original//x2LSRK2Cm7MZhjluni1msVJ3wDF.jpg" alt="Stranger Things"/></SwiperSlide>
-                    <SwiperSlide><img className="row__poster row__posterLarge" src="https://image.tmdb.org/t/p/original//j3SqEpnRaIth24ktKcI9vp63P9A.jpg" alt="The Crown"/></SwiperSlide>
-                    <SwiperSlide><img className="row__poster row__posterLarge" src="https://image.tmdb.org/t/p/original//scZlQQYnDVlnpxFTxaIv2g0BWnL.jpg" alt="The Umbrella Academy"/></SwiperSlide>
-                    <SwiperSlide><img className="row__poster row__posterLarge" src="https://image.tmdb.org/t/p/original//x2LSRK2Cm7MZhjluni1msVJ3wDF.jpg" alt="Stranger Things"/></SwiperSlide>
-                    <SwiperSlide><img className="row__poster row__posterLarge" src="https://image.tmdb.org/t/p/original//j3SqEpnRaIth24ktKcI9vp63P9A.jpg" alt="The Crown"/></SwiperSlide>
-                    <SwiperSlide><img className="row__poster row__posterLarge" src="https://image.tmdb.org/t/p/original//scZlQQYnDVlnpxFTxaIv2g0BWnL.jpg" alt="The Umbrella Academy"/></SwiperSlide>
-                    <SwiperSlide><img className="row__poster row__posterLarge" src="https://image.tmdb.org/t/p/original//x2LSRK2Cm7MZhjluni1msVJ3wDF.jpg" alt="Stranger Things"/></SwiperSlide>
-                */}
+                 
             {movies.map( movie => (
                 <SwiperSlide key={movie.id}>
-                    <img className={`row__poster ${isLargeRow && "row__posterLarge"}`} key={movie.id} src={`${base_url}${isLargeRow ? movie.poster_path: movie.backdrop_path}`} alt={movie.name}
-                    />
+                    <img key={movie.id}
+                         className={`row__poster ${isLargeRow && "row__posterLarge"}`}
+                         onClick={()=> handleClick(movie)}
+                    
+                        src={`${base_url}${
+                            isLargeRow ? movie.poster_path: movie.backdrop_path
+                        }`} 
+                        alt={movie.name}
+                        />
                 </SwiperSlide>
             ))}
 
-    </Swiper>
-               
-               
+        </Swiper>
+            </div>
+            <div className="row__trailer">
+            {trailerUrl && <Youtube videoId={trailerUrl} opts={opts} /> }
             </div>
         </div>
     )

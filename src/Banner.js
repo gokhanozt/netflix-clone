@@ -15,10 +15,7 @@ function Banner() {
             return request;
         }
         fetchData();
-
     },[]);
-
-    console.log(movie);
 
     //truncate function is making cut the given string after n'th character then add ... after that.
     function truncate(str, n) {
@@ -34,8 +31,6 @@ function Banner() {
         }}>
             <div className="banner__contents">
             <h1>{movie?.title || movie?.name || movie?.original_name}</h1>
-
-
                 <div className="banner__buttons">
                     <button className="banner__button button--play">
                     <svg version="1.1"

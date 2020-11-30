@@ -1,14 +1,19 @@
 .row{
     margin-left: 20px;
     color: #fff;
-}
-.row__posters{
-    display: flex;
-    padding-top: 20px;
-    margin-bottom: 20px;
-}
 
-.row__poster{
+    &__posters{
+      display: flex;
+      padding-top: 20px;
+      margin-bottom: 20px;
+
+      &:last-child{
+        margin-bottom: 0;
+        padding-bottom: 20px;
+      }
+  }
+
+  &__poster{
     object-fit: contain;
     width: 100%;
     max-height: 100px;
@@ -18,25 +23,33 @@
     -ms-transition: transform 450ms;
     -o-transition: transform 450ms;
     margin: 10px 15px 30px 0px;
+    cursor: pointer;
+
     &:hover{
         transform: scale(1.08);
         -webkit-transform: scale(1.08);
         -moz-transform: scale(1.08);
         -ms-transform: scale(1.08);
         -o-transform: scale(1.08);
-        /*opacity: 1;*/
     }
-}
-.row__posterLarge{
+  }
+
+  &__posterLarge{
     max-height: 250px;
+
     &:hover{
         transform: scale(1.10);
         -webkit-transform: scale(1.10);
         -moz-transform: scale(1.10);
         -ms-transform: scale(1.10);
         -o-transform: scale(1.10);
+    }
+  }
+  &__trailer{
+    padding-bottom: 20px;
+  }
 }
-}
+
 @media screen and (min-width: 240px) {
   .swiper-container {
     width: 240px;

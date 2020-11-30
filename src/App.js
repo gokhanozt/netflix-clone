@@ -1,27 +1,19 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './App.scss';
+import Nav from './Nav';
 import Row from './Row';
 import Banner from './Banner';
 import requests from './requests';
 
-
 function App() {
 
-//useEffect(() => window.dispatchEvent(new Event('resize')), []);
-useEffect(() => console.log('mounted'), []);
-//document.addEventListener("DOMContentLoaded", function(){
-  //dom is fully loaded, but maybe waiting on images & css files
-  //console.log('holey.');
-//});
-window.addEventListener("load", function(){
-  //everything is fully loaded, don't use me if you can use DOMContentLoaded
-  console.log('holey.');
-  
-  window.dispatchEvent(new Event('resize'));
-});
+  window.addEventListener("load", function(){
+    window.dispatchEvent(new Event('resize'));
+  });
 
   return (
     <div className="App">
+      <Nav />
       <Banner />
       <Row title="NETFLIX ORIGINALS" isLargeRow={true} fetchUrl={requests.fetchNetflixOriginals} />
       <Row title="Trending Now" fetchUrl={requests.fetchTrending} />
